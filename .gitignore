@@ -13,3 +13,16 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/src/main/res/xml/backup_rules.xml
+/app/src/main/res/xml/data_extraction_rules.xml
+/app/src/androidTest/java/com/projects/bitsoConsumer/ExampleInstrumentedTest.kt
+/app/src/test/java/com/projects/bitsoConsumer/ExampleUnitTest.kt
+/gradle.properties
+/.idea/gradle.xml
+/gradle/wrapper/gradle-wrapper.jar
+/gradle/wrapper/gradle-wrapper.properties
+/gradlew
+/gradlew.bat
+/.idea/misc.xml
+/app/src/main/res/values/themes.xml
+/.idea/vcs.xml
