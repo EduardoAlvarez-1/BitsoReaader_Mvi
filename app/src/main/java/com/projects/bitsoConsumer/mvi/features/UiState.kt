@@ -6,9 +6,3 @@ interface UiEvent
 
 interface UiEffect
 
-
-interface UiStateDetail
-
-interface UiEventDetail
-
-interface UiEffectDetail

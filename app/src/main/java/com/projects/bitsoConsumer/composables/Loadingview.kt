@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun LoadingView(message: String = "") {
+fun Loadingview(message: String = "") {
     Surface {
         Column(
             verticalArrangement = Arrangement.Center,

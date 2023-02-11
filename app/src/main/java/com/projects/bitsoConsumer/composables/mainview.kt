@@ -8,6 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -21,7 +22,7 @@ import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
-fun Mainview(navHostController: NavHostController, viewModel: BooksViewModel) {
+fun mainview(navHostController: NavHostController, viewModel: BooksViewModel) {
     val scope = rememberCoroutineScope()
 
     var lista: List<DetailedPayload> by remember {
@@ -34,7 +35,6 @@ fun Mainview(navHostController: NavHostController, viewModel: BooksViewModel) {
 
     var updates by remember { mutableStateOf("") }
 
-
     LaunchedEffect(Unit) {
         while (true) {
             delay(5.seconds)
@@ -46,7 +46,7 @@ fun Mainview(navHostController: NavHostController, viewModel: BooksViewModel) {
         viewModel.uiState.collect {
             when (it.getInfo) {
                 MainContract.BitsoApiState.Idle -> {}
-                is MainContract.BitsoApiState.Loading -> Loading=it.getInfo.status
+                is MainContract.BitsoApiState.Loading -> Loading = it.getInfo.status
                 is MainContract.BitsoApiState.Success -> lista = it.getInfo.link
                 is MainContract.BitsoApiState.tick -> updates = it.getInfo.link
             }
@@ -78,6 +78,14 @@ fun Mainview(navHostController: NavHostController, viewModel: BooksViewModel) {
                     MoneyCard(this@with, list, navHostController)
                 }
             }
+            Text(
+                text = stringResource(R.string.dis1),
+                color = Color.LightGray,
+            )
+            Text(
+                text = stringResource(R.string.dis2),
+                color = Color.LightGray,
+            )
         }
     }
 }

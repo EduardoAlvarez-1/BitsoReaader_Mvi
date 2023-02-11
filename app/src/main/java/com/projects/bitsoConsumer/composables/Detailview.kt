@@ -19,7 +19,7 @@ import com.projects.bitsoConsumer.composableitems.ItemTrading
 import com.projects.bitsoConsumer.composableitems.MoneyDetails
 import com.projects.bitsoConsumer.models.bitsotickers.PayloadTickers
 import com.projects.bitsoConsumer.models.trading.PayloadTrades
-import com.projects.bitsoConsumer.mvi.features.TradeInfo.DetailContract
+import com.projects.bitsoConsumer.mvi.features.TradeInfo.DetailsContract
 import com.projects.bitsoConsumer.support.shortToken
 import com.projects.bitsoConsumer.viewmodels.BooksDetailsViewModel
 import kotlinx.coroutines.delay
@@ -44,7 +44,7 @@ fun Detailview(viewModel: BooksDetailsViewModel, navController: NavHostControlle
             while (true) {
                 delay(5.seconds)
                 string?.let {
-                    setEvent(DetailContract.Event.OnNewClick(it))
+                    setEvent(DetailsContract.Event.OnNewClick(it))
                 }
             }
         }
@@ -52,10 +52,10 @@ fun Detailview(viewModel: BooksDetailsViewModel, navController: NavHostControlle
         LaunchedEffect(scope) {
             viewModel.uiState.collect {
                 when (it.getInfo) {
-                    DetailContract.DetailsBitsoApiState.Idle -> {}
-                    is DetailContract.DetailsBitsoApiState.Loading -> {}
-                    is DetailContract.DetailsBitsoApiState.Success -> askbidsList = it.getInfo.link
-                    is DetailContract.DetailsBitsoApiState.SuccessTrades -> TradesList = it.getInfo.link
+                    DetailsContract.DetailsBitsoApiState.Idle -> {}
+                    is DetailsContract.DetailsBitsoApiState.Loading -> {}
+                    is DetailsContract.DetailsBitsoApiState.Success -> askbidsList = it.getInfo.link
+                    is DetailsContract.DetailsBitsoApiState.SuccessTrades -> TradesList = it.getInfo.link
                 }
             }
         }
@@ -75,7 +75,7 @@ fun Detailview(viewModel: BooksDetailsViewModel, navController: NavHostControlle
             )
 
             if (askbidsList.isEmpty() || TradesList.isEmpty()) {
-                LoadingView("Estamos cargando la información")
+                Loadingview("Estamos cargando la información")
             } else {
                 LazyColumn(
                     modifier = Modifier

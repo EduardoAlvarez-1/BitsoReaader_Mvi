@@ -3,7 +3,7 @@ package com.projects.bitsoConsumer.viewmodels
 import androidx.lifecycle.viewModelScope
 import com.projects.bitsoConsumer.models.trading.PayloadTrades
 import com.projects.bitsoConsumer.mvi.features.BaseViewModel
-import com.projects.bitsoConsumer.mvi.features.TradeInfo.DetailContract
+import com.projects.bitsoConsumer.mvi.features.TradeInfo.DetailsContract
 import com.projects.bitsoConsumer.repository.BitsoDetailsRepository
 import com.projects.bitsoConsumer.support.operationKind
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,25 +15,25 @@ import javax.inject.Inject
 @HiltViewModel
 class BooksDetailsViewModel @Inject constructor(
     private val useCases: BitsoDetailsRepository,
-) : BaseViewModel<DetailContract.Event, DetailContract.DetailState, DetailContract.Effect>() {
+) : BaseViewModel<DetailsContract.Event, DetailsContract.DetailState, DetailsContract.Effect>() {
 
     init {
-        setEvent(DetailContract.Event.OnInit)
+        setEvent(DetailsContract.Event.OnInit)
     }
 
-    override fun createInitialState(): DetailContract.DetailState {
-        return DetailContract.DetailState(
-            DetailContract.DetailsBitsoApiState.Idle,
+    override fun createInitialState(): DetailsContract.DetailState {
+        return DetailsContract.DetailState(
+            DetailsContract.DetailsBitsoApiState.Idle,
         )
     }
 
     /**
      * Handle each event
      */
-    override fun handleEvent(event: DetailContract.Event) {
+    override fun handleEvent(event: DetailsContract.Event) {
         when (event) {
-            is DetailContract.Event.OnInit -> {}
-            is DetailContract.Event.OnNewClick -> {
+            is DetailsContract.Event.OnInit -> {}
+            is DetailsContract.Event.OnNewClick -> {
                 getBidsAsk(name = event.pair)
                 getTrades(name = event.pair)
             }
@@ -46,7 +46,7 @@ class BooksDetailsViewModel @Inject constructor(
                 .catch { }
                 .collect {
                     setState {
-                        copy(getInfo = DetailContract.DetailsBitsoApiState.Success(it))
+                        copy(getInfo = DetailsContract.DetailsBitsoApiState.Success(it))
                     }
                 }
         }
@@ -76,7 +76,7 @@ class BooksDetailsViewModel @Inject constructor(
             )
         }
         setState {
-            copy(getInfo = DetailContract.DetailsBitsoApiState.SuccessTrades(returnlist))
+            copy(getInfo = DetailsContract.DetailsBitsoApiState.SuccessTrades(returnlist))
         }
     }
 }

@@ -6,7 +6,7 @@ import com.projects.bitsoConsumer.mvi.features.UiEffect
 import com.projects.bitsoConsumer.mvi.features.UiEvent
 import com.projects.bitsoConsumer.mvi.features.UiState
 
-class DetailContract {
+class DetailsContract {
 
     // Events that user performed
     sealed class Event : UiEvent {

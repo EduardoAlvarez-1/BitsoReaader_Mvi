@@ -1,9 +1,9 @@
 package com.projects.bitsoConsumer.mvi.features.books
 
+import com.projects.bitsoConsumer.models.DetailedPayload
 import com.projects.bitsoConsumer.mvi.features.UiEffect
 import com.projects.bitsoConsumer.mvi.features.UiEvent
 import com.projects.bitsoConsumer.mvi.features.UiState
-import com.projects.bitsoConsumer.models.DetailedPayload
 
 class MainContract {
 
