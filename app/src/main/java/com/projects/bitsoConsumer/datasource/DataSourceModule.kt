@@ -1,8 +1,14 @@
 package com.projects.bitsoConsumer.datasource
 
+import android.content.Context
+import androidx.room.Room
+import com.projects.bitsoConsumer.room.dao.AskBidsDao
+import com.projects.bitsoConsumer.room.dao.TradesDao
+import com.projects.bitsoConsumer.room.db.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -44,5 +50,24 @@ class DataSourceModule {
     @Provides
     fun restBinanceDetailsDataSource(retrofit: Retrofit): BitsoDetailsDataSource =
         retrofit.create(BitsoDetailsDataSource::class.java)
-}
 
+    @Provides
+    @Singleton
+    fun provideAppDatabase(@ApplicationContext appContext: Context): AppDatabase {
+        return Room.databaseBuilder(
+            appContext,
+            AppDatabase::class.java,
+            "user_database",
+        )
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun userdao(db: AppDatabase): AskBidsDao = db.askBidsDao()
+
+    @Provides
+    @Singleton
+    fun tradesdao(db: AppDatabase): TradesDao = db.tradesDao()
+}

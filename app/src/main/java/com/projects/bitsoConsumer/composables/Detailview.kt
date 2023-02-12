@@ -20,24 +20,23 @@ import com.projects.bitsoConsumer.composableitems.MoneyDetails
 import com.projects.bitsoConsumer.models.bitsotickers.PayloadTickers
 import com.projects.bitsoConsumer.models.trading.PayloadTrades
 import com.projects.bitsoConsumer.mvi.features.TradeInfo.DetailsContract
-import com.projects.bitsoConsumer.support.shortToken
+import com.projects.bitsoConsumer.support.Disclaimer
+import com.projects.bitsoConsumer.support.TokenName
 import com.projects.bitsoConsumer.viewmodels.BooksDetailsViewModel
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
-fun Detailview(viewModel: BooksDetailsViewModel, navController: NavHostController, string: String?) {
+fun DetailView(viewModel: BooksDetailsViewModel, navController: NavHostController, string: String?) {
     val scope = rememberCoroutineScope()
 
     var askbidsList: List<PayloadTickers> by remember {
         mutableStateOf(emptyList())
     }
 
-    var TradesList: List<PayloadTrades> by remember {
+    var tradesList: List<PayloadTrades> by remember {
         mutableStateOf(emptyList())
     }
-
-    println("voy a recibir $askbidsList")
 
     with(viewModel) {
         LaunchedEffect(Unit) {
@@ -55,7 +54,7 @@ fun Detailview(viewModel: BooksDetailsViewModel, navController: NavHostControlle
                     DetailsContract.DetailsBitsoApiState.Idle -> {}
                     is DetailsContract.DetailsBitsoApiState.Loading -> {}
                     is DetailsContract.DetailsBitsoApiState.Success -> askbidsList = it.getInfo.link
-                    is DetailsContract.DetailsBitsoApiState.SuccessTrades -> TradesList = it.getInfo.link
+                    is DetailsContract.DetailsBitsoApiState.SuccessTrades -> tradesList = it.getInfo.link
                 }
             }
         }
@@ -70,12 +69,12 @@ fun Detailview(viewModel: BooksDetailsViewModel, navController: NavHostControlle
                     }
                 },
                 title = {
-                    Text("  ${shortToken(string.toString())}")
+                    Text("  ${TokenName(string.toString())}")
                 },
             )
 
-            if (askbidsList.isEmpty() || TradesList.isEmpty()) {
-                Loadingview("Estamos cargando la información")
+            if (askbidsList.isEmpty() || tradesList.isEmpty()) {
+                Loadingview(" ${if (askbidsList.isNotEmpty() || tradesList.isNotEmpty()) "Tu información esta casi lista" else "Estamos cargando la información" }")
             } else {
                 LazyColumn(
                     modifier = Modifier
@@ -108,12 +107,13 @@ fun Detailview(viewModel: BooksDetailsViewModel, navController: NavHostControlle
                     .fillMaxHeight(0.85F)
                     .padding(16.dp),
             ) {
-                if (TradesList.isNotEmpty()) {
-                    itemsIndexed(TradesList.take(25)) { _, data ->
+                if (tradesList.isNotEmpty()) {
+                    itemsIndexed(tradesList.take(25)) { _, data ->
                         ItemTrading(list = data)
                     }
                 }
             }
+            Disclaimer()
         }
     }
 }

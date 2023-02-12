@@ -8,7 +8,6 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -16,6 +15,7 @@ import androidx.navigation.NavHostController
 import com.projects.bitsoConsumer.composableitems.MoneyCard
 import com.projects.bitsoConsumer.models.DetailedPayload
 import com.projects.bitsoConsumer.mvi.features.books.MainContract
+import com.projects.bitsoConsumer.support.Disclaimer
 import com.projects.bitsoConsumer.viewmodels.BooksViewModel
 import com.projects.mvi.R
 import kotlinx.coroutines.delay
@@ -78,14 +78,7 @@ fun mainview(navHostController: NavHostController, viewModel: BooksViewModel) {
                     MoneyCard(this@with, list, navHostController)
                 }
             }
-            Text(
-                text = stringResource(R.string.dis1),
-                color = Color.LightGray,
-            )
-            Text(
-                text = stringResource(R.string.dis2),
-                color = Color.LightGray,
-            )
+            Disclaimer()
         }
     }
 }

@@ -36,22 +36,8 @@ class BooksViewModel @Inject constructor(
                 getBooks()
             }
             is MainContract.Event.OnNewClick -> {
-            //    getBooks()
+                //    getBooks()
             }
-        }
-    }
-
-    private fun setMessageTicker() {
-        viewModelScope.launch {
-            setState {
-                copy(getInfo = MainContract.BitsoApiState.tick("Tick Tac Toe"))
-            }
-        }
-    }
-
-    private fun info() {
-        viewModelScope.launch {
-            useCases.getBooks()
         }
     }
 
@@ -64,13 +50,18 @@ class BooksViewModel @Inject constructor(
                     }
                 }
                     .collect {
-                        setState { copy(getInfo = MainContract.BitsoApiState.Success(getnewList(it))) }
+                        setState { copy(getInfo = MainContract.BitsoApiState.Success(getNewBooksList(it))) }
+                        insertDbAskBids(processBooks(it))
                     }
             }
         } catch (e: Exception) { println("aqui llegue es $e") } }
+
+    private suspend fun insertDbAskBids(list: List<BooksPayload>) {
+        useCases.insertAskandBids(list)
+    }
 }
 
-private fun getnewList(openedPayloads: List<BooksPayload>): List<DetailedPayload> {
+private fun getNewBooksList(openedPayloads: List<BooksPayload>): List<DetailedPayload> {
     val returnlist = mutableListOf<DetailedPayload>()
 
     openedPayloads.forEach {
@@ -79,10 +70,25 @@ private fun getnewList(openedPayloads: List<BooksPayload>): List<DetailedPayload
                 payload = it,
                 shortname = shortToken(it.book),
                 icon = icon(it.book),
-                pair=it.book
+                pair = it.book,
             ),
         )
     }
 
     return returnlist
+}
+
+private fun processBooks(book: List<BooksPayload>): List<BooksPayload> {
+    val returnList = mutableListOf<BooksPayload>()
+    book.forEachIndexed { index, it ->
+        returnList.add(
+            BooksPayload(
+                id = index,
+                book = it.book,
+                maximum_price = it.maximum_price.take(10),
+                minimum_price = it.minimum_price.take(10),
+            ),
+        )
+    }
+    return returnList
 }

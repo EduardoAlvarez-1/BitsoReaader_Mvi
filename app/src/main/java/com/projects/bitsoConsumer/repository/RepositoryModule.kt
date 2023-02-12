@@ -16,5 +16,5 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bitsoRepoDetail(repo: BitsoDetailsImp): BitsoDetailsRepository
+    abstract fun bitsoRepoDetail(repo: BitsoDetailsRepositoryImp): BitsoDetailsRepository
 }

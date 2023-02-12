@@ -58,12 +58,14 @@ class BooksDetailsViewModel @Inject constructor(
                 .catch { }
                 .take(15)
                 .collect {
-                    GetnewListTrades(it)
+                    GetNewListTrades(it).apply {
+                        useCases.insertTrades(this)
+                    }
                 }
         }
     }
 
-    private suspend fun GetnewListTrades(openedPayloads: List<PayloadTrades>) {
+    private fun GetNewListTrades(openedPayloads: List<PayloadTrades>): List<PayloadTrades> {
         val returnlist = mutableListOf<PayloadTrades>()
         openedPayloads.forEach {
             returnlist.add(
@@ -78,5 +80,6 @@ class BooksDetailsViewModel @Inject constructor(
         setState {
             copy(getInfo = DetailsContract.DetailsBitsoApiState.SuccessTrades(returnlist))
         }
+        return returnlist
     }
 }

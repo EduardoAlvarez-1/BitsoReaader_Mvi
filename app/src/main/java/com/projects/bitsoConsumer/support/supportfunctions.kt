@@ -3,7 +3,7 @@ package com.projects.bitsoConsumer.support
 import android.util.Log
 import com.projects.bitsoConsumer.support.coinsdefinition.* // ktlint-disable no-wildcard-imports
 
-fun tokens(name: String): String {
+fun TokenName(name: String): String {
     val icon = when (name) {
         "btc_mxn" -> Btc().getCoin()
         "eth_mxn" -> Eth().getCoin()
@@ -15,6 +15,8 @@ fun tokens(name: String): String {
         "dai_mxn" -> Dai().getCoin()
         "usd_mxn" -> Usd().getCoin()
         "bat_mxn" -> Bat().getCoin()
+        "tigres_mxn" -> Trg().getCoin()
+        "eur_mxn" -> Eur().getCoin()
         else -> name
     }
     return icon
@@ -40,6 +42,8 @@ fun icon(icons: String): Int {
         "dai_mxn" -> Dai().getIcon()
         "usd_mxn" -> Usd().getIcon()
         "bat_mxn" -> Bat().getIcon()
+        "tigres_mxn" -> Trg().getIcon()
+        "eur_mxn" -> Eur().getIcon()
         else -> { GenericCoin().getIcon() }
     }
     return icon
@@ -57,6 +61,8 @@ fun shortToken(name: String): String {
         "dai_mxn" -> Dai().getCoinShorter()
         "usd_mxn" -> Usd().getCoinShorter()
         "bat_mxn" -> Bat().getCoinShorter()
+        "tigres_mxn" -> Trg().getCoinShorter()
+        "eur_mxn" -> Eur().getCoinShorter()
         else -> name
     }
     return shortname
