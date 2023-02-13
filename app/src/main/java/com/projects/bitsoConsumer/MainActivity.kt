@@ -3,7 +3,7 @@ package com.projects.bitsoConsumer
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -14,7 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.projects.bitsoConsumer.navroute.MenuNav
 import com.projects.bitsoConsumer.ui.theme.BitsoConsumerTheme
-import com.projects.bitsoConsumer.viewmodels.BooksViewModel
+import com.projects.bitsoConsumer.mvi.features.books.BooksViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

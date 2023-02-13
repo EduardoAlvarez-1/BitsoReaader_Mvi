@@ -7,5 +7,10 @@ data class PayloadTrades(
     val price: String
 )
 
+data class PayloadTradesGraph(
+    val index: Int,
+    val price: Double
+)
+
 
 

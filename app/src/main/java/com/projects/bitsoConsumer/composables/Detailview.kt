@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.projects.bitsoConsumer.composableitems.ItemTrading
@@ -22,7 +23,8 @@ import com.projects.bitsoConsumer.models.trading.PayloadTrades
 import com.projects.bitsoConsumer.mvi.features.TradeInfo.DetailsContract
 import com.projects.bitsoConsumer.support.Disclaimer
 import com.projects.bitsoConsumer.support.TokenName
-import com.projects.bitsoConsumer.viewmodels.BooksDetailsViewModel
+import com.projects.bitsoConsumer.mvi.features.TradeInfo.BooksDetailsViewModel
+import com.projects.mvi.R
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
 
@@ -68,6 +70,16 @@ fun DetailView(viewModel: BooksDetailsViewModel, navController: NavHostControlle
                         Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "null")
                     }
                 },
+                actions = {
+                    IconButton(onClick = {
+                        navController.navigate("grafica/$string")
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_auto_graph_24),
+                            contentDescription = "",
+                        )
+                    }
+                },
                 title = {
                     Text("  ${TokenName(string.toString())}")
                 },
@@ -84,7 +96,7 @@ fun DetailView(viewModel: BooksDetailsViewModel, navController: NavHostControlle
                     contentPadding = PaddingValues(16.dp),
                 ) {
                     itemsIndexed(askbidsList) { _, list ->
-                        MoneyDetails(list)
+                        MoneyDetails(list, navController, pair = string.toString())
                     }
                 }
             }

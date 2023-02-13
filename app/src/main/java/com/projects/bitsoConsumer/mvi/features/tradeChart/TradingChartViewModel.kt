@@ -1,9 +1,8 @@
-package com.projects.bitsoConsumer.viewmodels
+package com.projects.bitsoConsumer.mvi.features.tradeChart
 
 import androidx.lifecycle.viewModelScope
 import com.projects.bitsoConsumer.models.trading.PayloadTrades
 import com.projects.bitsoConsumer.mvi.features.BaseViewModel
-import com.projects.bitsoConsumer.mvi.features.TradeInfo.DetailsContract
 import com.projects.bitsoConsumer.repository.BitsoDetailsRepository
 import com.projects.bitsoConsumer.support.operationKind
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,45 +12,40 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BooksDetailsViewModel @Inject constructor(
+class TradingChartViewModel @Inject constructor(
     private val useCases: BitsoDetailsRepository,
-) : BaseViewModel<DetailsContract.Event, DetailsContract.DetailState, DetailsContract.Effect>() {
+) : BaseViewModel<ChartContract.Event, ChartContract.ChartState, ChartContract.Effect>() {
 
     init {
-        setEvent(DetailsContract.Event.OnInit)
+        setEvent(ChartContract.Event.OnInit(downloading = true, Update = false))
     }
 
-    override fun createInitialState(): DetailsContract.DetailState {
-        return DetailsContract.DetailState(
-            DetailsContract.DetailsBitsoApiState.Idle,
+    override fun createInitialState(): ChartContract.ChartState {
+        return ChartContract.ChartState(
+            ChartContract.ChartBitsoApiState.Idle,
         )
     }
 
     /**
      * Handle each event
      */
-    override fun handleEvent(event: DetailsContract.Event) {
+    override fun handleEvent(event: ChartContract.Event) {
         when (event) {
-            is DetailsContract.Event.OnInit -> {}
-            is DetailsContract.Event.OnNewClick -> {
-                getBidsAsk(name = event.pair)
+            is ChartContract.Event.OnInit -> {
+                setFlags(upd = event.Update, dow = event.downloading) }
+            is ChartContract.Event.OnUpdate -> {
                 getTrades(name = event.pair)
             }
         }
     }
 
-    private fun getBidsAsk(name: String) {
+    private fun setFlags(upd: Boolean, dow: Boolean) {
         viewModelScope.launch {
-            useCases.getBitsoBids(name)
-                .catch { }
-                .collect {
-                    setState {
-                        copy(getInfo = DetailsContract.DetailsBitsoApiState.Success(it))
-                    }
-                }
+            setState {
+                copy(getInfo = ChartContract.ChartBitsoApiState.Flags(Update = upd, downloading = dow))
+            }
         }
     }
-
     private fun getTrades(name: String) {
         viewModelScope.launch {
             useCases.getBitsoTrades(name)
@@ -78,7 +72,7 @@ class BooksDetailsViewModel @Inject constructor(
             )
         }
         setState {
-            copy(getInfo = DetailsContract.DetailsBitsoApiState.SuccessTrades(returnlist))
+            copy(getInfo = ChartContract.ChartBitsoApiState.SuccessTrades(returnlist))
         }
         return returnlist
     }

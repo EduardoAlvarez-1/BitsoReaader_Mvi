@@ -12,13 +12,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.projects.bitsoConsumer.composables.DetailView
+import com.projects.bitsoConsumer.composables.TradingChart
 import com.projects.bitsoConsumer.composables.mainview
 
 @Composable
 fun MenuNav(navController: NavHostController) {
     NavHost(navController = navController, startDestination = "start") {
 //        composable("loading"){ LoadingV() }
-        composable("start") { mainview(navHostController = navController, viewModel = hiltViewModel()) }
+        composable("start") {
+            mainview(
+                navHostController = navController,
+                viewModel = hiltViewModel(),
+            )
+        }
         composable(
             "details/{pair}",
             arguments = listOf(
@@ -27,7 +33,26 @@ fun MenuNav(navController: NavHostController) {
                 },
             ),
         ) { backStackEntry ->
-            DetailView(viewModel = hiltViewModel(), navController, backStackEntry.arguments?.getString("pair"))
+            DetailView(
+                viewModel = hiltViewModel(),
+                navController,
+                backStackEntry.arguments?.getString("pair"),
+            )
+        }
+
+        composable(
+            "grafica/{pair}",
+            arguments = listOf(
+                navArgument("pair") {
+                    type = NavType.StringType
+                },
+            ),
+        ) { backStackEntry ->
+            TradingChart(
+                viewModel = hiltViewModel(),
+                navController,
+                backStackEntry.arguments?.getString("pair"),
+            )
         }
     }
 }

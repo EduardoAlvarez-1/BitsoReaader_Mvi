@@ -12,6 +12,8 @@ class DetailsContract {
     sealed class Event : UiEvent {
         object OnInit : Event()
         data class OnNewClick(val pair: String) : Event()
+
+        data class OnNewClick2(val pair: String) : Event()
     }
 
     // Ui View States

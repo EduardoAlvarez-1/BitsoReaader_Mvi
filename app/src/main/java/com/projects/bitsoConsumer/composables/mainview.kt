@@ -16,7 +16,7 @@ import com.projects.bitsoConsumer.composableitems.MoneyCard
 import com.projects.bitsoConsumer.models.DetailedPayload
 import com.projects.bitsoConsumer.mvi.features.books.MainContract
 import com.projects.bitsoConsumer.support.Disclaimer
-import com.projects.bitsoConsumer.viewmodels.BooksViewModel
+import com.projects.bitsoConsumer.mvi.features.books.BooksViewModel
 import com.projects.mvi.R
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
@@ -67,15 +67,19 @@ fun mainview(navHostController: NavHostController, viewModel: BooksViewModel) {
                 },
             )
 
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(0.90F),
-                contentPadding = PaddingValues(16.dp),
-                state = rememberLazyListState(),
-            ) {
-                itemsIndexed(lista) { _, list ->
-                    MoneyCard(this@with, list, navHostController)
+            if (lista.isEmpty()) {
+                Loadingview("Espera un momento")
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.94F),
+                    contentPadding = PaddingValues(16.dp),
+                    state = rememberLazyListState(),
+                ) {
+                    itemsIndexed(lista) { _, list ->
+                        MoneyCard(this@with, list, navHostController)
+                    }
                 }
             }
             Disclaimer()

@@ -2,6 +2,7 @@ package com.projects.bitsoConsumer.composableitems
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -12,12 +13,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.projects.bitsoConsumer.models.bitsotickers.PayloadTickers
 import com.projects.bitsoConsumer.support.icon
 import com.projects.bitsoConsumer.support.shortToken
 
 @Composable
-fun MoneyDetails(list: PayloadTickers) {
+fun MoneyDetails(list: PayloadTickers, navController: NavHostController, pair: String) {
     Box(
         modifier = Modifier
             .fillMaxWidth()

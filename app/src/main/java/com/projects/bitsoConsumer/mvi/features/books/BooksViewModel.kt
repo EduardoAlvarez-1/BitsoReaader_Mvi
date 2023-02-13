@@ -1,9 +1,9 @@
-package com.projects.bitsoConsumer.viewmodels
+package com.projects.bitsoConsumer.mvi.features.books
+
 import androidx.lifecycle.viewModelScope
 import com.projects.bitsoConsumer.models.BooksPayload
 import com.projects.bitsoConsumer.models.DetailedPayload
 import com.projects.bitsoConsumer.mvi.features.BaseViewModel
-import com.projects.bitsoConsumer.mvi.features.books.MainContract
 import com.projects.bitsoConsumer.repository.BitsoRepository
 import com.projects.bitsoConsumer.support.icon
 import com.projects.bitsoConsumer.support.shortToken
@@ -35,9 +35,7 @@ class BooksViewModel @Inject constructor(
             is MainContract.Event.OnInit -> {
                 getBooks()
             }
-            is MainContract.Event.OnNewClick -> {
-                //    getBooks()
-            }
+            is MainContract.Event.OnNewClick -> {}
         }
     }
 
@@ -50,11 +48,19 @@ class BooksViewModel @Inject constructor(
                     }
                 }
                     .collect {
-                        setState { copy(getInfo = MainContract.BitsoApiState.Success(getNewBooksList(it))) }
+                        setState {
+                            copy(
+                                getInfo = MainContract.BitsoApiState.Success(
+                                    getNewBooksList(
+                                        it,
+                                    ),
+                                ),
+                            )
+                        }
                         insertDbAskBids(processBooks(it))
                     }
             }
-        } catch (e: Exception) { println("aqui llegue es $e") } }
+        } catch (e: Exception) { println("el error es $e") } }
 
     private suspend fun insertDbAskBids(list: List<BooksPayload>) {
         useCases.insertAskandBids(list)
