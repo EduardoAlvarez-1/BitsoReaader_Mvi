@@ -1,4 +1,4 @@
-package com.projects.bitsoConsumer.composables
+package com.projects.bitsoConsumer.composableviews
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn

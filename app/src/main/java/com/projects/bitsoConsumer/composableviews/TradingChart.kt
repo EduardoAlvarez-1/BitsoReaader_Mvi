@@ -1,4 +1,4 @@
-package com.projects.bitsoConsumer.composables
+package com.projects.bitsoConsumer.composableviews
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.projects.bitsoConsumer.composableitems.canvas.QuadLineChart
+import com.projects.bitsoConsumer.canvas.QuadLineChart
 import com.projects.bitsoConsumer.models.trading.PayloadTrades
 import com.projects.bitsoConsumer.models.trading.PayloadTradesGraph
 import com.projects.bitsoConsumer.mvi.features.tradeChart.ChartContract

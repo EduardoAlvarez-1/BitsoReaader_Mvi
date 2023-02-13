@@ -11,9 +11,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.projects.bitsoConsumer.composables.DetailView
-import com.projects.bitsoConsumer.composables.TradingChart
-import com.projects.bitsoConsumer.composables.mainview
+import com.projects.bitsoConsumer.composableviews.DetailView
+import com.projects.bitsoConsumer.composableviews.TradingChart
+import com.projects.bitsoConsumer.composableviews.mainview
 
 @Composable
 fun MenuNav(navController: NavHostController) {

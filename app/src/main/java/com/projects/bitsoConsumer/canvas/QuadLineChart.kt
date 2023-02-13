@@ -1,4 +1,4 @@
-package com.projects.bitsoConsumer.composableitems.canvas
+package com.projects.bitsoConsumer.canvas
 
 import android.graphics.Paint
 import androidx.compose.foundation.Canvas

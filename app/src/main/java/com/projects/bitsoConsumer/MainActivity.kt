@@ -30,7 +30,6 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background,
                 ) {
                     MenuNav(navController)
-//                    Greeting("Android", viewModel = hiltViewModel())
                 }
             }
         }
